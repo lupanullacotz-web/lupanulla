@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupanulla | Pakia Nyaraka</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Oswald', 'sans-serif'] },
+                    colors: { bgDark: '#f8fafc', panelLight: '#ffffff', textMain: '#0f172a', primaryBlue: '#020617', accentTeal: '#0891b2' }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bgDark font-sans antialiased">
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 h-20 flex items-center">
+        <div class="max-w-4xl mx-auto px-4 w-full flex justify-between items-center">
+            <a href="documents.html" class="flex items-center gap-2 text-primaryBlue font-bold hover:text-accentTeal transition-colors">
+                <i class="ph ph-arrow-left text-xl"></i>
+                <span>Rudi Maktaba</span>
+            </a>
+            <span class="font-display font-bold text-xl uppercase text-primaryBlue">Pakia Nyaraka</span>
+            <div class="w-10"></div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <div class="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="p-8 sm:p-12">
+                <div class="mb-10 text-center">
+                    <h2 class="text-2xl font-bold text-primaryBlue mb-2">Shiriki Maarifa</h2>
+                    <p class="text-gray-500">Pakia vitabu, miongozo au mitihani ya majaribio ili kuwasaidia wengine.</p>
+                </div>
+
+                <form id="upload-form" class="space-y-8">
+                    <!-- File Drop Area -->
+                    <div id="drop-zone" class="border-2 border-dashed border-gray-200 rounded-2xl p-10 text-center hover:border-accentTeal hover:bg-slate-50 transition-all cursor-pointer group">
+                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accentTeal group-hover:text-white transition-colors">
+                            <i class="ph-bold ph-upload-simple text-2xl"></i>
+                        </div>
+                        <p class="text-primaryBlue font-bold mb-1">Bonyeza au buruta faili hapa</p>
+                        <p class="text-sm text-gray-400">PDF (Max 100MB)</p>
+                        <input type="file" id="file-input" class="hidden" accept=".pdf">
+                    </div>
+
+                    <!-- File Info (Hidden until selected) -->
+                    <div id="file-info" class="hidden bg-gray-50 p-4 rounded-xl flex items-center justify-between border border-gray-100">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-red-100 text-red-600 rounded-lg flex items-center justify-center">
+                                <i class="ph-fill ph-file-pdf text-xl"></i>
+                            </div>
+                            <div>
+                                <p id="file-name" class="font-bold text-sm text-primaryBlue"></p>
+                                <p id="file-size" class="text-xs text-gray-400"></p>
+                            </div>
+                        </div>
+                        <button type="button" id="remove-file" class="text-gray-400 hover:text-red-500"><i class="ph ph-trash text-xl"></i></button>
+                    </div>
+
+                    <!-- Metadata Fields -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-primaryBlue">Jina la Nyaraka</label>
+                            <input type="text" placeholder="Mfano: Biology Form 4 Notes" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-accentTeal outline-none transition-all" required>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-primaryBlue">Kundi (Category)</label>
+                            <select class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-accentTeal outline-none transition-all">
+                                <option>Vitabu</option>
+                                <option>Miongozo ya Walimu</option>
+                                <option>Mitihani ya Majaribio</option>
+                                <option>Vidokezo (Notes)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-primaryBlue">Maelezo (Description)</label>
+                        <textarea rows="4" placeholder="Elezea kwa ufupi kuhusu nyaraka hii..." class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-accentTeal outline-none transition-all"></textarea>
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-primaryBlue text-white py-4 rounded-xl font-bold hover:bg-slate-800 transition-all shadow-lg shadow-primaryBlue/10 flex items-center justify-center gap-2">
+                            <i class="ph-bold ph-cloud-arrow-up"></i>
+                            Pakia Nyaraka Sasa
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="mt-8 bg-blue-50 p-6 rounded-2xl border border-blue-100 flex gap-4">
+            <i class="ph-fill ph-info text-blue-500 text-2xl flex-shrink-0"></i>
+            <p class="text-sm text-blue-800">
+                <strong>Kumbuka:</strong> Kwa kupakia faili hii, unathibitisha kuwa unamiliki haki miliki au una kibali cha kusambaza maudhui haya. Nyaraka zote zinahakikiwa na timu yetu kabla ya kuonekana hadharani.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const fileInfo = document.getElementById('file-info');
+        const fileName = document.getElementById('file-name');
+        const fileSize = document.getElementById('file-size');
+        const removeFile = document.getElementById('remove-file');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('border-accentTeal', 'bg-slate-50');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('border-accentTeal', 'bg-slate-50');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('border-accentTeal', 'bg-slate-50');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type !== 'application/pdf') {
+                    alert('Tafadhali pakia faili ya PDF pekee.');
+                    return;
+                }
+                if (file.size > 100 * 1024 * 1024) {
+                    alert('Faili ni kubwa mno (Max 100MB).');
+                    return;
+                }
+                
+                fileName.textContent = file.name;
+                fileSize.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+                fileInfo.classList.remove('hidden');
+                dropZone.classList.add('hidden');
+            }
+        }
+
+        removeFile.addEventListener('click', () => {
+            fileInput.value = '';
+            fileInfo.classList.add('hidden');
+            dropZone.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>

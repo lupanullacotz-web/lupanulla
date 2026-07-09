@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingia / Jisajili | Lupanulla</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    },
+                    colors: {
+                        bgDark: '#f8fafc',
+                        panelLight: '#ffffff',
+                        textMain: '#0f172a',
+                        textMuted: '#64748b',
+                        primaryBlue: '#020617',
+                        accentTeal: '#0891b2',
+                        accentRed: '#e11d48'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #f8fafc; color: #0f172a; }
+        .tab-active { border-bottom: 2px solid #0891b2; color: #0891b2; font-weight: 600; }
+        .tab-inactive { color: #64748b; }
+        .auth-panel { display: none; }
+        .auth-panel.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Spinner */
+        .spinner { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid white; width: 20px; height: 20px; animation: spin 1s linear infinite; display: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .btn-loading .spinner { display: inline-block; }
+        .btn-loading .btn-text { display: none; }
+    </style>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+</head>
+<body class="antialiased font-sans min-h-screen flex items-center justify-center p-4">
+
+    <!-- Auth Container -->
+    <div class="max-w-4xl w-full bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
+        
+        <!-- Left Side: Image & Branding -->
+        <div class="hidden md:flex md:w-1/2 bg-primaryBlue relative flex-col justify-between p-10 overflow-hidden">
+            <div class="absolute inset-0 z-0 opacity-40">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop" alt="Students" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/80 to-transparent"></div>
+            </div>
+            
+            <div class="relative z-10">
+                <a href="index.html" class="flex items-center gap-2 mb-8">
+                    <img src="images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-lg object-cover">
+                    <span class="font-display font-bold text-2xl tracking-tight text-white uppercase">Lupanulla</span>
+                </a>
+                <h1 class="font-display font-bold text-4xl text-white leading-tight mb-4">
+                    Karibu Kwenye<br>Kitovu Cha Elimu.
+                </h1>
+                <p class="text-gray-300 text-lg font-sans">
+                    Ungana na maelfu ya wanafunzi na walimu Tanzania kote. Pata masomo, mitihani, na video za kujifunza.
+                </p>
+            </div>
+            
+            <div class="relative z-10 mt-12 flex items-center gap-3">
+                <div class="flex -space-x-3">
+                    <img class="w-10 h-10 rounded-full border-2 border-primaryBlue" src="https://i.pravatar.cc/100?img=1" alt="User">
+                    <img class="w-10 h-10 rounded-full border-2 border-primaryBlue" src="https://i.pravatar.cc/100?img=2" alt="User">
+                    <img class="w-10 h-10 rounded-full border-2 border-primaryBlue" src="https://i.pravatar.cc/100?img=3" alt="User">
+                </div>
+                <p class="text-sm text-gray-300 font-medium font-sans">Zaidi ya wanafunzi 50k+ wanatumia</p>
+            </div>
+        </div>
+
+        <!-- Right Side: Auth Forms -->
+        <div class="w-full md:w-1/2 p-8 sm:p-12">
+            <!-- Mobile Logo -->
+            <div class="md:hidden flex justify-center mb-6">
+                <a href="index.html" class="flex items-center gap-2">
+                    <img src="images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-lg">
+                    <span class="font-display font-bold text-2xl tracking-tight text-primaryBlue uppercase">Lupanulla</span>
+                </a>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex mb-8 border-b border-gray-200">
+                <button id="tab-login" class="flex-1 pb-3 text-center text-lg tab-active transition-colors" onclick="switchTab('login')">Ingia</button>
+                <button id="tab-register" class="flex-1 pb-3 text-center text-lg tab-inactive hover:text-primaryBlue transition-colors" onclick="switchTab('register')">Jisajili</button>
+            </div>
+
+            <!-- Error/Success Message Alert -->
+            <div id="auth-alert" class="hidden mb-6 p-3 rounded-lg text-sm font-medium"></div>
+
+            <!-- LOGIN PANEL -->
+            <div id="panel-login" class="auth-panel active">
+                <h2 class="text-2xl font-bold text-primaryBlue mb-6">Karibu Tena</h2>
+
+                <!-- Email Form -->
+                <form id="login-email-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-textMain mb-1">Barua Pepe</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="ph ph-envelope-simple text-gray-400 text-lg"></i>
+                            </div>
+                            <input type="email" id="login-email" required class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accentTeal focus:border-transparent transition-all" placeholder="jina@shule.com">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="block text-sm font-medium text-textMain">Nenosiri</label>
+                            <a href="#" id="forgot-password-link" class="text-xs text-accentTeal hover:underline">Umesahau?</a>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="ph ph-lock-key text-gray-400 text-lg"></i>
+                            </div>
+                            <input type="password" id="login-password" required class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accentTeal focus:border-transparent transition-all" placeholder="••••••••">
+                        </div>
+                    </div>
+                    <button type="submit" id="btn-login" class="w-full bg-accentTeal hover:bg-cyan-700 text-white font-bold py-2.5 rounded-lg transition-colors flex justify-center items-center">
+                        <span class="btn-text">Ingia</span>
+                        <div class="spinner"></div>
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="flex items-center my-6">
+                    <div class="flex-grow border-t border-gray-200"></div>
+                    <span class="px-3 text-sm text-gray-400 font-sans">AU INGIA KWA</span>
+                    <div class="flex-grow border-t border-gray-200"></div>
+                </div>
+
+                <!-- Social/Phone Logins -->
+                <div class="space-y-3">
+                    <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 hover:bg-gray-50 text-textMain font-medium py-2.5 rounded-lg transition-colors">
+                        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5">
+                        Google
+                    </button>
+                    <button onclick="loginWithFacebook()" class="w-full flex items-center justify-center gap-3 bg-[#1877F2] hover:bg-[#166fe5] text-white font-medium py-2.5 rounded-lg transition-colors">
+                        <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook" class="w-5 h-5 filter brightness-0 invert">
+                        Facebook
+                    </button>
+                    <button onclick="showPhoneAuth()" class="w-full flex items-center justify-center gap-3 bg-gray-100 border border-gray-200 hover:bg-gray-200 text-textMain font-medium py-2.5 rounded-lg transition-colors">
+                        <i class="ph-fill ph-device-mobile text-xl text-gray-600"></i>
+                        Namba ya Simu
+                    </button>
+                </div>
+            </div>
+
+            <!-- REGISTER PANEL -->
+            <div id="panel-register" class="auth-panel">
+                <h2 class="text-2xl font-bold text-primaryBlue mb-6">Tengeneza Akaunti</h2>
+
+                <form id="register-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-textMain mb-1">Jina Kamili</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="ph ph-user text-gray-400 text-lg"></i>
+                            </div>
+                            <input type="text" id="reg-name" required class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accentTeal focus:border-transparent" placeholder="Jina lako">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-textMain mb-1">Barua Pepe</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="ph ph-envelope-simple text-gray-400 text-lg"></i>
+                            </div>
+                            <input type="email" id="reg-email" required class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accentTeal focus:border-transparent" placeholder="jina@shule.com">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-textMain mb-1">Nenosiri</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="ph ph-lock-key text-gray-400 text-lg"></i>
+                            </div>
+                            <input type="password" id="reg-password" required minlength="6" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accentTeal focus:border-transparent" placeholder="Angalau herufi 6">
+                        </div>
+                    </div>
+                    <button type="submit" id="btn-register" class="w-full bg-primaryBlue hover:bg-gray-800 text-white font-bold py-2.5 rounded-lg transition-colors flex justify-center items-center mt-2">
+                        <span class="btn-text">Kamilisha Usajili</span>
+                        <div class="spinner"></div>
+                    </button>
+                    
+                    <p class="text-xs text-gray-500 text-center mt-4 font-sans">
+                        Kwa kujisajili, unakubaliana na <a href="terms.html" class="text-accentTeal hover:underline">Vigezo na Masharti</a> vyetu.
+                    </p>
+                </form>
+            </div>
+
+            <!-- PHONE AUTH PANEL (Hidden by default) -->
+            <div id="panel-phone" class="auth-panel">
+                <button onclick="switchTab('login')" class="text-sm text-gray-500 hover:text-primaryBlue mb-4 flex items-center gap-1">
+                    <i class="ph ph-arrow-left"></i> Rudi Nyuma
+                </button>
+                <h2 class="text-2xl font-bold text-primaryBlue mb-2">Namba ya Simu</h2>
+                <p class="text-sm text-gray-500 mb-6 font-sans">Tutatuma namba ya siri (OTP) kwenye simu yako.</p>
+
+                <!-- Step 1: Send SMS -->
+                <div id="phone-step-1">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-textMain mb-1">Ingiza Namba</label>
+                        <div class="flex shadow-sm rounded-lg">
+                            <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                                +255
+                            </span>
+                            <input type="tel" id="phone-number" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-lg border border-gray-300 focus:ring-accentTeal focus:border-accentTeal" placeholder="7XX XXX XXX">
+                        </div>
+                    </div>
+                    <!-- Firebase Recaptcha Container -->
+                    <div id="recaptcha-container" class="mb-4"></div>
+                    <button onclick="sendOTP()" id="btn-send-otp" class="w-full bg-accentTeal hover:bg-cyan-700 text-white font-bold py-2.5 rounded-lg transition-colors flex justify-center items-center">
+                        <span class="btn-text">Tuma OTP</span>
+                        <div class="spinner"></div>
+                    </button>
+                </div>
+
+                <!-- Step 2: Verify OTP -->
+                <div id="phone-step-2" class="hidden">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-textMain mb-1">Namba ya Siri (OTP)</label>
+                        <input type="text" id="otp-code" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accentTeal focus:border-transparent text-center tracking-widest text-lg font-bold" placeholder="•••••">
+                    </div>
+                    <button onclick="verifyOTP()" id="btn-verify-otp" class="w-full bg-primaryBlue hover:bg-gray-800 text-white font-bold py-2.5 rounded-lg transition-colors flex justify-center items-center">
+                        <span class="btn-text">Thibitisha</span>
+                        <div class="spinner"></div>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Firebase JS SDK Implementation -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { 
+            getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, 
+            signInWithEmailAndPassword, createUserWithEmailAndPassword, 
+            RecaptchaVerifier, signInWithPhoneNumber, updateProfile, sendPasswordResetEmail
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import {
+            getDatabase, ref, set, get
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBRFJ_T4qynTutOmMb_wcuuRmFIiwJ__xE",
+            authDomain: "lupanulla.firebaseapp.com",
+            databaseURL: "https://lupanulla-default-rtdb.firebaseio.com",
+            projectId: "lupanulla",
+            storageBucket: "lupanulla.firebasestorage.app",
+            messagingSenderId: "168472987630",
+            appId: "1:168472987630:web:8b2e4aa3bc8fb4a0f3b0ff",
+            measurementId: "G-3CS888WRWH"
+        };
+
+        // Anzisha Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        // Barua pepe ya mwanzilishi inatambulika moja kwa moja kama ADMIN
+        const FOUNDER_EMAIL = "lupanulla.co.tz@gmail.com";
+
+        // Hifadhi mtumiaji mpya kwenye database
+        async function saveUserIfNew(user, displayName) {
+            try {
+                const userRef = ref(db, `users/${user.uid}`);
+                const snap = await get(userRef);
+                
+                // Angalia kama huyu ndiye mwanzilishi anajiunga kwa mara ya kwanza
+                const isFounder = user.email && user.email.toLowerCase() === FOUNDER_EMAIL.toLowerCase();
+
+                if (!snap.exists()) {
+                    await set(userRef, {
+                        displayName: displayName || user.displayName || '',
+                        email: user.email || '',
+                        phone: user.phoneNumber || '',
+                        role: isFounder ? 'superadmin' : 'user', // Mpe mwanzilishi superadmin papo hapo
+                        createdAt: Date.now()
+                    });
+                }
+            } catch (err) {
+                console.error("Database registration issue: ", err);
+            }
+        }
+
+        // Providers za Mitandao ya kijamii
+        const googleProvider = new GoogleAuthProvider();
+        const facebookProvider = new FacebookAuthProvider();
+
+        // Kuunganisha functions na Window object ili zifanye kazi kwenye HTML onclick events
+        window.switchTab = function(tabName) {
+            hideAlert();
+            
+            // Rejesha mfumo wa simu uanze mwanzo
+            document.getElementById('phone-step-1').classList.remove('hidden');
+            document.getElementById('phone-step-2').classList.add('hidden');
+
+            document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('tab-login').className = 'flex-1 pb-3 text-center text-lg tab-inactive hover:text-primaryBlue transition-colors';
+            document.getElementById('tab-register').className = 'flex-1 pb-3 text-center text-lg tab-inactive hover:text-primaryBlue transition-colors';
+
+            if(tabName === 'login') {
+                document.getElementById('panel-login').classList.add('active');
+                document.getElementById('tab-login').className = 'flex-1 pb-3 text-center text-lg tab-active transition-colors';
+            } else if(tabName === 'register') {
+                document.getElementById('panel-register').classList.add('active');
+                document.getElementById('tab-register').className = 'flex-1 pb-3 text-center text-lg tab-active transition-colors';
+            }
+        };
+
+        window.showPhoneAuth = function() {
+            document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('panel-phone').classList.add('active');
+            
+            // Anzisha Recaptcha punde tu paneli ya simu inapofunguliwa
+            if(!window.recaptchaVerifier) {
+                window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                    'size': 'normal',
+                    'callback': (response) => {
+                        // reCAPTCHA solved
+                    }
+                });
+                window.recaptchaVerifier.render().catch(err => {
+                    console.error("Recaptcha error: ", err);
+                });
+            }
+        };
+
+        function showAlert(message, isError = true) {
+            const alertBox = document.getElementById('auth-alert');
+            alertBox.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-green-100', 'text-green-700');
+            alertBox.classList.add(isError ? 'bg-red-100' : 'bg-green-100');
+            alertBox.classList.add(isError ? 'text-red-700' : 'text-green-700');
+            alertBox.innerHTML = message;
+        }
+
+        function hideAlert() {
+            document.getElementById('auth-alert').classList.add('hidden');
+        }
+
+        function setBtnLoading(btnId, isLoading) {
+            const btn = document.getElementById(btnId);
+            if(btn) {
+                if(isLoading) btn.classList.add('btn-loading');
+                else btn.classList.remove('btn-loading');
+                btn.disabled = isLoading;
+            }
+        }
+
+        // --- MFUMO SAHIHI WA KUELEKEZA MTUMIAJI ---
+        async function redirectSuccess(user) {
+            console.log("--- DEBUGGING REDIRECT ---");
+            console.log("Mtumiaji:", user.email);
+            
+            const params = new URLSearchParams(window.location.search);
+            const next = params.get('next') || '';
+
+            // HAPA NDIYO MABADILIKO YALIPO KUHAKIKISHA EMAIL INAFANYA KAZI KAMA ULIVYOOMBA
+            const isFounder = user.email && user.email.toLowerCase() === FOUNDER_EMAIL.toLowerCase();
+
+            showAlert("Tafadhali subiri, tunaelekeza...", false);
+
+            setTimeout(() => {
+                // Kama ni barua pepe ya mwanzilishi, mpeleke admin.html moja kwa moja
+                if (isFounder) {
+                    window.location.href = 'admin.html';
+                } 
+                // Mtu mwingine yeyote akiingia (tofauti na email hiyo), aende dashboard
+                // isipokuwa kama kuna param ya ?next= ambayo inampeleka ukurasa tofauti na admin.html
+                else {
+                    if (next && next !== 'admin.html') {
+                        window.location.href = next;
+                    } else {
+                        window.location.href = 'dashboard.html';
+                    }
+                }
+            }, 1500);
+        }
+
+        // --- AUTH OPERATIONS ---
+
+        // 1. Kuingia (Email & Password)
+        document.getElementById('login-email-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            
+            setBtnLoading('btn-login', true);
+            hideAlert();
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                await redirectSuccess(userCredential.user);
+            } catch (error) {
+                let msg = "Imeshindikana kuingia.";
+                if(error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                    msg = "Barua pepe au nenosiri si sahihi.";
+                } else if(error.code === 'auth/invalid-email') {
+                    msg = "Mfumo wa barua pepe si sahihi.";
+                }
+                showAlert(msg);
+                setBtnLoading('btn-login', false);
+            } 
+        });
+
+        // 2. Umesahau Nenosiri (Password Reset)
+        document.getElementById('forgot-password-link').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            if (!email) {
+                showAlert("Weka barua pepe yako kwanza kwenye kisanduku cha 'Barua Pepe', kisha bofya tena 'Umesahau?'.");
+                document.getElementById('login-email').focus();
+                return;
+            }
+            try {
+                await sendPasswordResetEmail(auth, email);
+                showAlert("Tumetuma ujumbe wenye maelekezo ya kubadilisha nenosiri kwenye barua pepe yako.", false);
+            } catch (error) {
+                let msg = "Imeshindikana kutuma ujumbe wa kubadilisha nenosiri.";
+                if (error.code === 'auth/invalid-email') msg = "Barua pepe si sahihi.";
+                if (error.code === 'auth/user-not-found') msg = "Akaunti hii haipo kwenye mfumo wetu.";
+                showAlert(msg);
+            }
+        });
+
+        // 3. Kujisajili (Email & Password)
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-password').value;
+            
+            setBtnLoading('btn-register', true);
+            hideAlert();
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                // Weka Jina la Mtumiaji
+                await updateProfile(userCredential.user, { displayName: name });
+                // Hifadhi kwenye database (atapewa role stahiki hapa hapa)
+                await saveUserIfNew(userCredential.user, name);
+                
+                showAlert("Hongera! Akaunti yako imetengenezwa kikamilifu.", false);
+                
+                // Mpeleke sehemu husika kulingana na yeye ni nani
+                await redirectSuccess(userCredential.user);
+
+            } catch (error) {
+                let msg = "Imeshindwa kusajili akaunti.";
+                if(error.code === 'auth/email-already-in-use') msg = "Barua pepe hii tayari inatumika na akaunti nyingine.";
+                if(error.code === 'auth/weak-password') msg = "Nenosiri ni dhaifu mno. Hakikisha lina herufi au namba zisizopungua 6.";
+                showAlert(msg);
+                setBtnLoading('btn-register', false);
+            } 
+        });
+
+        // 4. Google Login
+        window.loginWithGoogle = async function() {
+            hideAlert();
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                await saveUserIfNew(result.user);
+                await redirectSuccess(result.user);
+            } catch (error) {
+                if (error.code !== 'auth/popup-closed-by-user') {
+                    showAlert("Imeshindwa kuingia kwa kutumia Google: " + error.message);
+                }
+            }
+        };
+
+        // 5. Facebook Login
+        window.loginWithFacebook = async function() {
+            hideAlert();
+            try {
+                const result = await signInWithPopup(auth, facebookProvider);
+                await saveUserIfNew(result.user);
+                await redirectSuccess(result.user);
+            } catch (error) {
+                if (error.code !== 'auth/popup-closed-by-user') {
+                    if (error.code === 'auth/account-exists-with-different-credential') {
+                        showAlert("Barua pepe hii inatumika tayari kwenye njia nyingine ya kuingia.");
+                    } else {
+                        showAlert("Imeshindwa kuingia kwa Facebook: " + error.message);
+                    }
+                }
+            }
+        };
+
+        // 6. Kutuma OTP (Namba ya Simu)
+        let confirmationResult = null;
+        window.sendOTP = async function() {
+            const rawPhone = document.getElementById('phone-number').value.trim();
+            if(!rawPhone) return showAlert("Tafadhali ingiza namba ya simu kwanza.");
+            
+            // Hakikisha namba iko kwenye muundo wa Kimataifa (E.164)
+            let phoneNumber = rawPhone.replace(/\D/g,'');
+            if(phoneNumber.startsWith('0')) phoneNumber = phoneNumber.substring(1);
+            if(phoneNumber.startsWith('255')) phoneNumber = phoneNumber.substring(3);
+            phoneNumber = '+255' + phoneNumber;
+
+            setBtnLoading('btn-send-otp', true);
+            hideAlert();
+
+            try {
+                confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
+                document.getElementById('phone-step-1').classList.add('hidden');
+                document.getElementById('phone-step-2').classList.remove('hidden');
+                showAlert("Namba ya siri (OTP) imetunwa kwenye simu yako!", false);
+            } catch (error) {
+                console.error("SMS Error: ", error);
+                showAlert("Imeshindwa kutuma SMS. Hakikisha namba imesajiliwa vyema na Recaptcha imekamilika.");
+                if(window.recaptchaVerifier) {
+                    // Re-render recaptcha incase of failure
+                    window.recaptchaVerifier.render().catch(e => console.log(e));
+                }
+            } finally {
+                setBtnLoading('btn-send-otp', false);
+            }
+        };
+
+        // 7. Kuthibitisha OTP
+        window.verifyOTP = async function() {
+            const code = document.getElementById('otp-code').value.trim();
+            if(!code || code.length < 6) return showAlert("Tafadhali ingiza OTP ya herufi au namba 6.");
+
+            setBtnLoading('btn-verify-otp', true);
+            hideAlert();
+
+            try {
+                const result = await confirmationResult.confirm(code);
+                await saveUserIfNew(result.user);
+                await redirectSuccess(result.user);
+            } catch (error) {
+                showAlert("Namba ya siri (OTP) uliyoingiza si sahihi au imeisha muda wake.");
+                setBtnLoading('btn-verify-otp', false);
+            } 
+        };
+
+    </script>
+</body>
+</html>

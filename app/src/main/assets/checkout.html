@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kamilisha Agizo | Lupanulla</title>
+  <meta name="theme-color" content="#0891b2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="icon" type="image/webp" href="/assets/images/logo.webp">
+  <link rel="apple-touch-icon" href="/assets/images/logo.webp">
+  <link rel="manifest" href="/manifest.json">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="/assets/js/sw-register.js" defer></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans:['Inter','sans-serif'], display:['Oswald','sans-serif'] },
+          colors: { bgDark:'#f8fafc', panelLight:'#ffffff', textMain:'#0f172a',
+                    textMuted:'#64748b', primaryBlue:'#020617', accentTeal:'#0891b2', accentRed:'#e11d48' }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color:#f8fafc; color:#0f172a; }
+    .pay-option input:checked + label { border-color:#0891b2; background:#ecfeff; }
+    .field-error { border-color:#e11d48 !important; }
+  </style>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+  <script src="/assets/js/main.js" defer></script>
+</head>
+<body class="font-sans min-h-screen">
+
+<!-- Navbar -->
+<nav class="bg-primaryBlue text-white sticky top-0 z-50 shadow-md">
+  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2">
+      <img src="/assets/images/logo.webp" alt="" class="w-8 h-8 rounded-lg object-cover">
+      <span class="font-display font-bold text-xl tracking-tight uppercase">Lupanulla</span>
+    </a>
+    <a href="cart.html" class="flex items-center gap-1 text-slate-300 hover:text-white text-sm transition-colors">
+      <i class="ph ph-arrow-left"></i> Rudi Mkobani
+    </a>
+  </div>
+</nav>
+
+<main class="max-w-6xl mx-auto px-4 py-8">
+  <h1 class="font-display font-bold text-2xl uppercase mb-1">Kamilisha Agizo</h1>
+  <p class="text-textMuted text-sm mb-6">Jaza taarifa zako, kisha tuma agizo kwa WhatsApp ili tuwasiliane haraka.</p>
+
+  <!-- Main content (hidden until cart confirmed non-empty) -->
+  <div id="checkoutContent" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- Form -->
+    <form id="orderForm" class="lg:col-span-2 space-y-5" novalidate>
+
+      <div class="bg-white rounded-xl border border-gray-100 p-5">
+        <h2 class="font-display font-bold text-base uppercase mb-4 flex items-center gap-2">
+          <i class="ph-bold ph-user-circle text-accentTeal"></i> Taarifa Zako
+        </h2>
+        <div class="space-y-4">
+          <div>
+            <label class="text-xs font-medium text-textMuted block mb-1">Jina Kamili *</label>
+            <input id="custName" type="text" required
+              class="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-accentTeal"
+              placeholder="Mfano: Juma Mussa Ali">
+            <p class="error-msg hidden text-accentRed text-xs mt-1">Tafadhali jaza jina lako.</p>
+          </div>
+          <div>
+            <label class="text-xs font-medium text-textMuted block mb-1">Namba ya Simu (WhatsApp) *</label>
+            <input id="custPhone" type="tel" required
+              class="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-accentTeal"
+              placeholder="Mfano: 0712 345 678">
+            <p class="error-msg hidden text-accentRed text-xs mt-1">Tafadhali jaza namba sahihi ya simu.</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-xs font-medium text-textMuted block mb-1">Mkoa *</label>
+              <input id="custRegion" type="text" required
+                class="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-accentTeal"
+                placeholder="Mfano: Mwanza">
+              <p class="error-msg hidden text-accentRed text-xs mt-1">Jaza mkoa wako.</p>
+            </div>
+            <div>
+              <label class="text-xs font-medium text-textMuted block mb-1">Wilaya/Mtaa</label>
+              <input id="custDistrict" type="text"
+                class="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-accentTeal"
+                placeholder="Mfano: Ilemela">
+            </div>
+          </div>
+          <div>
+            <label class="text-xs font-medium text-textMuted block mb-1">Anwani ya Utoaji (hiari)</label>
+            <textarea id="custAddress" rows="2"
+              class="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-accentTeal"
+              placeholder="Maelezo ya mahali — karibu na nini, alama maalum n.k."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-gray-100 p-5">
+        <h2 class="font-display font-bold text-base uppercase mb-4 flex items-center gap-2">
+          <i class="ph-bold ph-wallet text-accentTeal"></i> Njia ya Malipo
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="pay-option">
+            <input type="radio" name="payMethod" id="payCash" value="Malipo Mkononi (Cash)" checked class="peer hidden">
+            <label for="payCash" class="block cursor-pointer border-2 border-gray-200 rounded-lg p-3 text-center text-xs font-medium transition-colors">
+              <i class="ph-bold ph-money text-xl block mb-1 text-textMuted"></i> Mkononi (Cash)
+            </label>
+          </div>
+          <div class="pay-option">
+            <input type="radio" name="payMethod" id="payMpesa" value="M-Pesa / Tigo Pesa / Airtel Money" class="peer hidden">
+            <label for="payMpesa" class="block cursor-pointer border-2 border-gray-200 rounded-lg p-3 text-center text-xs font-medium transition-colors">
+              <i class="ph-bold ph-device-mobile text-xl block mb-1 text-textMuted"></i> Pesa za Simu
+            </label>
+          </div>
+          <div class="pay-option">
+            <input type="radio" name="payMethod" id="payBank" value="Uhamisho wa Benki" class="peer hidden">
+            <label for="payBank" class="block cursor-pointer border-2 border-gray-200 rounded-lg p-3 text-center text-xs font-medium transition-colors">
+              <i class="ph-bold ph-bank text-xl block mb-1 text-textMuted"></i> Benki
+            </label>
+          </div>
+        </div>
+        <p class="text-[11px] text-textMuted mt-3">Maelezo kamili ya malipo tutakutumia kupitia WhatsApp baada ya kuthibitisha agizo lako.</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-gray-100 p-5">
+        <label class="text-xs font-medium text-textMuted block mb-1">Maelezo ya Ziada (hiari)</label>
+        <textarea id="custNotes" rows="2"
+          class="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-accentTeal"
+          placeholder="Mfano: Niwasiliane jioni baada ya saa 11."></textarea>
+      </div>
+    </form>
+
+    <!-- Summary -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-xl border border-gray-100 p-5 sticky top-20">
+        <h2 class="font-display font-bold text-lg uppercase mb-4">Muhtasari wa Agizo</h2>
+        <div id="summaryItems" class="space-y-3 mb-4 max-h-64 overflow-y-auto"></div>
+        <div class="space-y-2 text-sm mb-4 border-t pt-3">
+          <div class="flex justify-between text-textMuted">
+            <span>Jumla ya bidhaa</span>
+            <span id="summaryCount">0 bidhaa</span>
+          </div>
+          <div class="flex justify-between text-textMuted">
+            <span>Usafirishaji</span>
+            <span class="text-green-600 font-medium">Itaamuliwa</span>
+          </div>
+          <div class="border-t pt-3 mt-3 flex justify-between font-bold text-base">
+            <span>Jumla</span>
+            <span id="summaryTotal" class="text-accentTeal font-display text-xl">TZS 0</span>
+          </div>
+        </div>
+        <button id="submitOrderBtn" type="submit" form="orderForm"
+          class="w-full bg-accentTeal hover:bg-cyan-600 text-white text-center py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+          <i class="ph-bold ph-whatsapp-logo text-lg"></i> Tuma Agizo kwa WhatsApp
+        </button>
+        <p class="text-[11px] text-textMuted text-center mt-2">Utaelekezwa WhatsApp kuthibitisha agizo lako moja kwa moja.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success state -->
+  <div id="successState" class="hidden text-center py-20">
+    <i class="ph-fill ph-check-circle text-6xl text-green-500 block mb-4"></i>
+    <h2 class="font-display font-bold text-xl uppercase mb-2">Agizo Limetumwa!</h2>
+    <p class="text-textMuted text-sm mb-6 max-w-md mx-auto">Agizo lako limepokelewa. Dirisha la WhatsApp limefunguliwa ili uthibitishe na timu yetu — kama halikufunguka, bonyeza kitufe hapa chini.</p>
+    <a id="whatsappFallbackLink" href="https://wa.me/255700000000" target="_blank" rel="noopener"
+      class="bg-green-500 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-green-600 transition-colors inline-flex items-center gap-2 mb-3">
+      <i class="ph-bold ph-whatsapp-logo"></i> Fungua WhatsApp
+    </a>
+    <br>
+    <a href="duka.html" class="text-accentTeal text-sm hover:underline">← Rudi Dukani Kuendelea Kununua</a>
+  </div>
+
+  <!-- Empty cart -->
+  <div id="emptyState" class="hidden text-center py-24">
+    <i class="ph ph-shopping-cart text-6xl text-slate-300 block mb-4"></i>
+    <h2 class="font-display font-bold text-xl text-textMuted uppercase mb-2">Mkoba wako uko tupu</h2>
+    <p class="text-textMuted text-sm mb-6">Huwezi kuagiza bila bidhaa mkobani</p>
+    <a href="duka.html" class="bg-accentTeal text-white px-6 py-2.5 rounded-lg font-medium hover:bg-cyan-600 transition-colors inline-flex items-center gap-2">
+      <i class="ph-bold ph-shopping-bag"></i> Nenda Dukani
+    </a>
+  </div>
+</main>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBRFJ_T4qynTutOmMb_wcuuRmFIiwJ__xE",
+    authDomain: "lupanulla.firebaseapp.com",
+    databaseURL: "https://lupanulla-default-rtdb.firebaseio.com",
+    projectId: "lupanulla",
+    storageBucket: "lupanulla.firebasestorage.app",
+    messagingSenderId: "168472987630",
+    appId: "1:168472987630:web:8b2e4aa3bc8fb4a0f3b0ff"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db  = getDatabase(app);
+
+  // ⚠️ BADILISHA NAMBA HII NA NAMBA YA WHATSAPP YA DUKA LAKO
+  // Mfumo: msimbo wa nchi + namba, BILA + au 0 mwanzoni. Mfano Tanzania: 255712345678
+  const ADMIN_WHATSAPP = "255700000000";
+
+  function getCart() {
+    try { return JSON.parse(localStorage.getItem('lupa_cart') || '{}'); }
+    catch { return {}; }
+  }
+
+  const items = Object.values(getCart());
+  const checkoutContent = document.getElementById('checkoutContent');
+  const emptyState = document.getElementById('emptyState');
+  const successState = document.getElementById('successState');
+
+  if (!items.length) {
+    emptyState.classList.remove('hidden');
+  } else {
+    checkoutContent.classList.remove('hidden');
+    renderSummary(items);
+  }
+
+  function renderSummary(items) {
+    const wrap = document.getElementById('summaryItems');
+    let total = 0, count = 0;
+    wrap.innerHTML = items.map(item => {
+      total += item.price * item.quantity;
+      count += item.quantity;
+      return `
+        <div class="flex justify-between items-center text-sm gap-2">
+          <div class="min-w-0">
+            <p class="font-medium truncate">${item.name}</p>
+            <p class="text-textMuted text-xs">${item.quantity} &times; TZS ${Number(item.price).toLocaleString()}</p>
+          </div>
+          <p class="font-semibold flex-shrink-0">TZS ${Number(item.price * item.quantity).toLocaleString()}</p>
+        </div>`;
+    }).join('');
+    document.getElementById('summaryTotal').textContent = `TZS ${total.toLocaleString()}`;
+    document.getElementById('summaryCount').textContent = `${count} bidhaa`;
+    return total;
+  }
+
+  function buildWhatsAppMessage(order) {
+    const lines = [];
+    lines.push(`*AGIZO JIPYA - LUPANULLA*`);
+    lines.push(``);
+    lines.push(`*Mteja:* ${order.name}`);
+    lines.push(`*Simu:* ${order.phone}`);
+    lines.push(`*Mkoa:* ${order.region}${order.district ? ' - ' + order.district : ''}`);
+    if (order.address) lines.push(`*Anwani:* ${order.address}`);
+    lines.push(`*Malipo:* ${order.payMethod}`);
+    lines.push(``);
+    lines.push(`*Bidhaa:*`);
+    order.items.forEach(it => {
+      lines.push(`- ${it.name} x${it.quantity} = TZS ${Number(it.price * it.quantity).toLocaleString()}`);
+    });
+    lines.push(``);
+    lines.push(`*JUMLA: TZS ${order.total.toLocaleString()}*`);
+    if (order.notes) { lines.push(``); lines.push(`*Maelezo:* ${order.notes}`); }
+    return lines.join('\n');
+  }
+
+  function showFieldError(input, show) {
+    input.classList.toggle('field-error', show);
+    const msg = input.parentElement.querySelector('.error-msg');
+    if (msg) msg.classList.toggle('hidden', !show);
+  }
+
+  document.getElementById('orderForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('custName');
+    const phone = document.getElementById('custPhone');
+    const region = document.getElementById('custRegion');
+
+    let valid = true;
+    [ [name, name.value.trim().length < 2],
+      [phone, phone.value.trim().length < 7],
+      [region, region.value.trim().length < 2] ].forEach(([el, isInvalid]) => {
+        showFieldError(el, isInvalid);
+        if (isInvalid) valid = false;
+      });
+    if (!valid) return;
+
+    const currentItems = Object.values(getCart());
+    if (!currentItems.length) { window.location.href = 'duka.html'; return; }
+    const total = currentItems.reduce((s, i) => s + i.price * i.quantity, 0);
+
+    const order = {
+      name: name.value.trim(),
+      phone: phone.value.trim(),
+      region: region.value.trim(),
+      district: document.getElementById('custDistrict').value.trim(),
+      address: document.getElementById('custAddress').value.trim(),
+      payMethod: document.querySelector('input[name="payMethod"]:checked').value,
+      notes: document.getElementById('custNotes').value.trim(),
+      items: currentItems.map(i => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity })),
+      total,
+      status: 'mpya',
+      createdAt: { '.sv': 'timestamp' }
+    };
+
+    const submitBtn = document.getElementById('submitOrderBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Inatuma...';
+
+    const waMessage = buildWhatsAppMessage(order);
+    const waUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(waMessage)}`;
+
+    try {
+      await push(ref(db, 'orders'), order);
+    } catch (err) {
+      console.error('Imeshindikana kuhifadhi agizo Firebase:', err);
+      // Tunaendelea kutuma WhatsApp hata kama kuhifadhi database kumeshindikana
+    }
+
+    localStorage.removeItem('lupa_cart');
+
+    document.getElementById('whatsappFallbackLink').href = waUrl;
+    checkoutContent.classList.add('hidden');
+    successState.classList.remove('hidden');
+
+    window.open(waUrl, '_blank');
+  });
+</script>
+</body>
+</html>

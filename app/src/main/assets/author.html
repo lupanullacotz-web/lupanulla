@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupanulla | Author Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Oswald', 'sans-serif'] },
+                    colors: { bgDark: '#f8fafc', panelLight: '#ffffff', textMain: '#0f172a', primaryBlue: '#020617', accentTeal: '#0891b2' }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bgDark font-sans antialiased">
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 h-20 flex items-center">
+        <div class="max-w-7xl mx-auto px-4 w-full flex justify-between items-center">
+            <a href="documents.html" class="flex items-center gap-2">
+                <img src="images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-lg">
+                <span class="font-display font-bold text-2xl text-primaryBlue uppercase">Lupanulla</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="upload.html" class="bg-accentTeal text-white px-4 py-2 rounded-xl font-bold text-sm">Pakia Mpya</a>
+                <a href="dashboard.html" class="text-gray-500 hover:text-primaryBlue"><i class="ph ph-user-circle text-2xl"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
+            <div>
+                <h1 class="text-3xl font-display font-bold text-primaryBlue uppercase">Dashboard ya Mwandishi</h1>
+                <p class="text-gray-500">Karibu tena, <strong>Dr. Mrema</strong>. Angalia maendeleo ya kazi zako.</p>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-gray-200 flex items-center gap-4 shadow-sm">
+                <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                    <i class="ph-fill ph-wallet text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Mapato</p>
+                    <p class="font-bold text-primaryBlue">TZS 124,500</p>
+                </div>
+                <button class="ml-4 bg-gray-100 hover:bg-gray-200 text-primaryBlue px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">Toa</button>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-4">
+                    <i class="ph-fill ph-file-pdf text-2xl"></i>
+                </div>
+                <p class="text-3xl font-bold text-primaryBlue">12</p>
+                <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Nyaraka</p>
+            </div>
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-4">
+                    <i class="ph-fill ph-eye text-2xl"></i>
+                </div>
+                <p class="text-3xl font-bold text-primaryBlue">8.4k</p>
+                <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Views</p>
+            </div>
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mb-4">
+                    <i class="ph-fill ph-star text-2xl"></i>
+                </div>
+                <p class="text-3xl font-bold text-primaryBlue">4.8</p>
+                <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Rating</p>
+            </div>
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                <div class="w-12 h-12 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center mb-4">
+                    <i class="ph-fill ph-users text-2xl"></i>
+                </div>
+                <p class="text-3xl font-bold text-primaryBlue">324</p>
+                <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Wafuasi</p>
+            </div>
+        </div>
+
+        <!-- Recent Uploads -->
+        <div class="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="px-8 py-6 border-b border-gray-100 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-primaryBlue">Nyaraka Zangu</h2>
+                <button class="text-accentTeal font-bold text-sm">Ona Zote</button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50 text-gray-400 text-[10px] font-bold uppercase tracking-widest">
+                        <tr>
+                            <th class="px-8 py-4">Nyaraka</th>
+                            <th class="px-8 py-4">Status</th>
+                            <th class="px-8 py-4">Views</th>
+                            <th class="px-8 py-4">Tarehe</th>
+                            <th class="px-8 py-4"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr>
+                            <td class="px-8 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-red-100 text-red-600 rounded-lg flex items-center justify-center shrink-0">
+                                        <i class="ph-fill ph-file-pdf"></i>
+                                    </div>
+                                    <span class="font-bold text-primaryBlue">Biology Form 4 Notes</span>
+                                </div>
+                            </td>
+                            <td class="px-8 py-4"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Approved</span></td>
+                            <td class="px-8 py-4 text-sm text-gray-500 font-semibold">2,412</td>
+                            <td class="px-8 py-4 text-sm text-gray-400">Apr 12, 2026</td>
+                            <td class="px-8 py-4 text-right">
+                                <button class="text-gray-400 hover:text-primaryBlue"><i class="ph ph-dots-three-vertical text-xl"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-8 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-red-100 text-red-600 rounded-lg flex items-center justify-center shrink-0">
+                                        <i class="ph-fill ph-file-pdf"></i>
+                                    </div>
+                                    <span class="font-bold text-primaryBlue">Cell Biology Guide</span>
+                                </div>
+                            </td>
+                            <td class="px-8 py-4"><span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Pending</span></td>
+                            <td class="px-8 py-4 text-sm text-gray-500 font-semibold">0</td>
+                            <td class="px-8 py-4 text-sm text-gray-400">Ayo hivi sasa</td>
+                            <td class="px-8 py-4 text-right">
+                                <button class="text-gray-400 hover:text-primaryBlue"><i class="ph ph-dots-three-vertical text-xl"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

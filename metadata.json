@@ -1,0 +1,6 @@
+{
+  "name": "Lupanulla",
+  "description": "Jukwaa la elimu Tanzania linalojumuisha mfumo wa kushiriki nyaraka (Scribd-style), masomo, mitihani, na msaidizi wa AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupanulla | Ajira kwa Mikoa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Oswald', 'sans-serif'] },
+                    colors: { bgDark: '#f8fafc', panelLight: '#ffffff', textMain: '#0f172a', primaryBlue: '#020617', accentTeal: '#0891b2' }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bgDark font-sans antialiased">
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 h-20 flex items-center">
+        <div class="max-w-7xl mx-auto px-4 w-full flex justify-between items-center">
+            <a href="ajira.html" class="flex items-center gap-2 text-primaryBlue font-bold"><i class="ph ph-arrow-left"></i> Rudi Nyuma</a>
+            <span class="font-display font-bold text-xl uppercase">Ajira kwa Mikoa</span>
+            <div class="w-10"></div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <script>
+                const regions = [
+                    "Arusha", "Dar es Salaam", "Dodoma", "Geita", "Iringa", "Kagera", "Katavi", "Kigoma", 
+                    "Kilimanjaro", "Lindi", "Manyara", "Mara", "Mbeya", "Morogoro", "Mtwara", "Mwanza", 
+                    "Njombe", "Pemba", "Pwani", "Rukwa", "Ruvuma", "Shinyanga", "Simiyu", "Singida", 
+                    "Songwe", "Tabora", "Tanga", "Zanzibar"
+                ];
+                regions.forEach(region => {
+                    document.write(`
+                        <a href="ajira.html?region=${region.toLowerCase()}" class="bg-white p-4 rounded-xl border border-gray-100 text-center hover:border-accentTeal hover:shadow-sm transition-all">
+                            <h3 class="font-bold text-primaryBlue">${region}</h3>
+                        </a>
+                    `);
+                });
+            </script>
+        </div>
+    </main>
+</body>
+</html>

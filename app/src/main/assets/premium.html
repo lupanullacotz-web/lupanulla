@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupanulla | Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Oswald', 'sans-serif'] },
+                    colors: { bgDark: '#f8fafc', panelLight: '#ffffff', textMain: '#0f172a', primaryBlue: '#020617', accentTeal: '#0891b2' }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-primaryBlue font-sans antialiased text-white">
+    <nav class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+        <a href="documents.html" class="flex items-center gap-2">
+            <img src="images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-lg">
+            <span class="font-display font-bold text-2xl uppercase">Lupanulla</span>
+        </a>
+        <a href="documents.html" class="text-white/60 hover:text-white transition-colors"><i class="ph ph-x text-2xl"></i></a>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-display font-bold uppercase tracking-tight mb-6">Ukurasa wa Premium</h1>
+            <p class="text-white/60 text-lg max-w-2xl mx-auto">Jiunge na maelfu ya wanafunzi na walimu walioboresha uzoefu wao wa kujifunza.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Free -->
+            <div class="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm">
+                <h3 class="text-xl font-bold mb-2">Free Plan</h3>
+                <p class="text-white/40 text-sm mb-6">Kwa ajili ya kuanza</p>
+                <div class="mb-8">
+                    <span class="text-4xl font-bold">TZS 0</span>
+                    <span class="text-white/40">/milele</span>
+                </div>
+                <ul class="space-y-4 mb-8 text-sm">
+                    <li class="flex items-center gap-3"><i class="ph-bold ph-check text-green-400"></i> Kusoma nyaraka mtandaoni</li>
+                    <li class="flex items-center gap-3"><i class="ph-bold ph-check text-green-400"></i> Masomo ya bure</li>
+                    <li class="flex items-center gap-3 text-white/30"><i class="ph-bold ph-x text-red-400"></i> Kupakua PDFs (Offline)</li>
+                    <li class="flex items-center gap-3 text-white/30"><i class="ph-bold ph-x text-red-400"></i> Msaidizi wa AI (Unlimted)</li>
+                </ul>
+                <button class="w-full py-4 rounded-xl border border-white/20 font-bold hover:bg-white/10 transition-colors">Upo hapa</button>
+            </div>
+
+            <!-- Premium (Featured) -->
+            <div class="bg-white text-primaryBlue rounded-3xl p-8 relative transform md:scale-110 shadow-2xl z-10">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-accentTeal text-white px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Inapendekezwa</div>
+                <h3 class="text-xl font-bold mb-2">Premium Pro</h3>
+                <p class="text-gray-400 text-sm mb-6">Uzoefu kamili wa elimu</p>
+                <div class="mb-8 text-primaryBlue">
+                    <span class="text-4xl font-bold">TZS 4,500</span>
+                    <span class="text-gray-400">/mwezi</span>
+                </div>
+                <ul class="space-y-4 mb-8 text-sm">
+                    <li class="flex items-center gap-3 font-semibold"><i class="ph-bold ph-check text-accentTeal"></i> Pakua nyaraka zote (PDF)</li>
+                    <li class="flex items-center gap-3 font-semibold"><i class="ph-bold ph-check text-accentTeal"></i> Msaidizi wa AI Unlimited</li>
+                    <li class="flex items-center gap-3 font-semibold"><i class="ph-bold ph-check text-accentTeal"></i> Hakuna Matangazo</li>
+                    <li class="flex items-center gap-3 font-semibold"><i class="ph-bold ph-check text-accentTeal"></i> Vyeti vya kumaliza masomo</li>
+                </ul>
+                <button class="w-full py-4 rounded-xl bg-primaryBlue text-white font-bold hover:bg-slate-800 transition-colors shadow-lg shadow-primaryBlue/20">Anza Sasa</button>
+            </div>
+
+            <!-- Annual -->
+            <div class="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm">
+                <h3 class="text-xl font-bold mb-2">Annual Saver</h3>
+                <p class="text-white/40 text-sm mb-6">Okoa zaidi kwa mwaka</p>
+                <div class="mb-8">
+                    <span class="text-4xl font-bold">TZS 35k</span>
+                    <span class="text-white/40">/mwaka</span>
+                </div>
+                <ul class="space-y-4 mb-8 text-sm">
+                    <li class="flex items-center gap-3"><i class="ph-bold ph-check text-green-400"></i> Vipengele vyote vya Pro</li>
+                    <li class="flex items-center gap-3"><i class="ph-bold ph-check text-green-400"></i> Okoa 35% ya bei</li>
+                    <li class="flex items-center gap-3"><i class="ph-bold ph-check text-green-400"></i> Support ya kwanza (Priority)</li>
+                </ul>
+                <button class="w-full py-4 rounded-xl border border-white/20 font-bold hover:bg-white/10 transition-colors">Chagua Plan</button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

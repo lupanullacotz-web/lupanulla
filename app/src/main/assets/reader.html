@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupanulla | Msomaji wa Nyaraka</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Oswald', 'sans-serif'] },
+                    colors: { bgDark: '#f8fafc', panelLight: '#ffffff', textMain: '#0f172a', primaryBlue: '#020617', accentTeal: '#0891b2' }
+                }
+            }
+        }
+    </script>
+    <style>
+        .reader-container { height: calc(100vh - 80px); }
+        .sidebar-scroll { height: calc(100vh - 80px); overflow-y: auto; }
+    </style>
+</head>
+<body class="bg-bgDark font-sans antialiased overflow-hidden">
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-gray-200 h-20 flex items-center shrink-0">
+        <div class="max-w-[1920px] mx-auto px-4 w-full flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a href="documents.html" class="p-2 rounded-full hover:bg-gray-100 transition-colors text-primaryBlue">
+                    <i class="ph ph-arrow-left text-2xl"></i>
+                </a>
+                <div class="hidden sm:block">
+                    <h1 id="doc-title" class="font-bold text-primaryBlue truncate max-w-md">Inapakia nyaraka...</h1>
+                    <p class="text-xs text-gray-400">Msomaji wa Lupanulla</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <div id="premium-badge" class="hidden bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 border border-amber-200">
+                    <i class="ph-fill ph-crown"></i> PREMIUM
+                </div>
+                <button id="download-btn" class="bg-primaryBlue text-white px-5 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <i class="ph-bold ph-download-simple"></i>
+                    <span class="hidden sm:block">Pakua</span>
+                </button>
+                <button id="share-btn" class="bg-gray-100 text-primaryBlue p-2.5 rounded-xl hover:bg-gray-200">
+                    <i class="ph ph-share-network text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex flex-col lg:flex-row reader-container">
+        <!-- Main Viewer -->
+        <main class="flex-grow bg-slate-800 relative">
+            <!-- Google Drive Viewer Iframe (Mock ID used here) -->
+            <iframe id="viewer-iframe" src="about:blank" class="w-full h-full border-none" allow="autoplay"></iframe>
+            
+            <!-- Custom Overlay for Free Users (Disable Right Click / Controls) -->
+            <div id="restriction-overlay" class="hidden absolute inset-0 pointer-events-none"></div>
+        </main>
+
+        <!-- Sidebar (Info & Comments) -->
+        <aside class="w-full lg:w-96 bg-white border-l border-gray-200 sidebar-scroll p-6 hidden lg:block">
+            <div class="space-y-8">
+                <!-- Doc Details -->
+                <div>
+                    <h2 class="text-lg font-bold text-primaryBlue mb-4">Maelezo ya Nyaraka</h2>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div id="author-avatar" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-primaryBlue font-bold text-lg">M</div>
+                        <div>
+                            <p id="author-name" class="font-bold text-primaryBlue">Dr. Mrema</p>
+                            <p class="text-xs text-gray-400">Mwalimu wa Baiolojia</p>
+                        </div>
+                    </div>
+                    <p id="doc-description" class="text-sm text-gray-600 leading-relaxed">
+                        Nyaraka hii inajumuisha vidokezo vyote muhimu vya somo la Baiolojia kwa kidato cha nne kulingana na mtaala wa NECTA.
+                    </p>
+                </div>
+
+                <!-- Tags -->
+                <div>
+                    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Tags</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">Biology</span>
+                        <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">Form 4</span>
+                        <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">NECTA</span>
+                    </div>
+                </div>
+
+                <!-- Analytics -->
+                <div class="grid grid-cols-2 gap-4 border-t border-b border-gray-100 py-6">
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-primaryBlue">2.4k</p>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Views</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-primaryBlue">142</p>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Downloads</p>
+                    </div>
+                </div>
+
+                <!-- Related -->
+                <div>
+                    <h3 class="text-sm font-bold text-primaryBlue mb-4">Nyaraka Zinazohusiana</h3>
+                    <div class="space-y-4">
+                        <a href="#" class="flex items-center gap-3 group">
+                            <div class="w-12 h-16 bg-gray-50 rounded-lg overflow-hidden shrink-0 border border-gray-100">
+                                <img src="https://images.unsplash.com/photo-1532187863486-abf9d39d99c5?q=80&w=200&auto=format&fit=crop" class="w-full h-full object-cover">
+                            </div>
+                            <p class="text-xs font-bold text-primaryBlue group-hover:text-accentTeal line-clamp-2">Practical Guide: Biology Lab 2024</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const docId = urlParams.get('id');
+        const viewer = document.getElementById('viewer-iframe');
+        const titleEl = document.getElementById('doc-title');
+        const downloadBtn = document.getElementById('download-btn');
+        const premiumBadge = document.getElementById('premium-badge');
+
+        // Mock User State
+        const isPremium = false;
+
+        // Mock Document Data
+        const docs = {
+            '1': { title: 'Biology Form 4 Notes', driveId: '1-o5v-u87p89p7p89p7' },
+            'default': { title: 'Lupanulla Document', driveId: '1-o5v-u87p89p7p89p7' }
+        };
+
+        const doc = docs[docId] || docs['default'];
+        
+        // Update UI
+        titleEl.textContent = doc.title;
+        
+        // Drive Viewer URL (embedded mode)
+        // Note: For real integration, you'd use the driveUrl from Firestore
+        viewer.src = `https://drive.google.com/file/d/${doc.driveId}/preview`;
+
+        if (!isPremium) {
+            downloadBtn.disabled = true;
+            downloadBtn.innerHTML = '<i class="ph-fill ph-lock"></i> Premium Pekee';
+            downloadBtn.onclick = () => window.location.href = 'premium.html';
+        } else {
+            premiumBadge.classList.remove('hidden');
+        }
+
+        // Disable printing/saving shortcuts if possible (limited on web)
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 's')) {
+                e.preventDefault();
+                alert('Tafadhali jiunge na Premium ili kupakua au kuchapa nyaraka.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="sw">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maktaba ya Masomo | Lupanulla</title>
+  <meta name="description" content="Soma mada mbalimbali za masomo ya sekondari na shule ya msingi Tanzania.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <meta name="theme-color" content="#0891b2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="icon" type="image/jpg" href="images/logo.jpg">
+  <link rel="apple-touch-icon" href="images/logo.jpg">
+  <link rel="manifest" href="manifest.json">
+  <script src="js/sw-register.js" defer></script>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body class="lupa-page antialiased">
+  <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+  <div class="lupa-container h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2 font-extrabold text-slate-950">
+      <img src="images/logo.jpg" alt="" class="w-9 h-9 rounded-lg object-cover flex-shrink-0" aria-hidden="true">
+      <span>Lupanulla</span>
+    </a>
+    <button id="mobile-menu-btn" class="lupa-icon-btn md:hidden" aria-label="Fungua menyu">
+      <i id="menu-icon" class="ph ph-list text-xl"></i>
+    </button>
+    <div class="hidden md:flex items-center gap-1 text-sm font-semibold text-slate-600">
+      <a href="index.html" class="px-3 py-2 rounded-md hover:bg-slate-100">Nyumbani</a>
+      <a href="masomo.html" class="px-3 py-2 rounded-md hover:bg-slate-100">Masomo</a>
+      <a href="mitihani.html" class="px-3 py-2 rounded-md hover:bg-slate-100">Mitihani</a>
+      <a href="videos.html" class="px-3 py-2 rounded-md hover:bg-slate-100">Video</a>
+      <a href="fisimaji.html" class="px-3 py-2 rounded-md text-cyan-700 hover:bg-cyan-50">Fisi Maji AI</a>
+      <a href="dashboard.html" class="ml-2 px-3 py-2 rounded-md bg-slate-950 text-white hover:bg-slate-800">Dashibodi</a>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white">
+    <div class="lupa-container py-3 grid gap-1 text-sm font-semibold text-slate-700">
+      <a href="index.html" class="px-3 py-2 rounded-md hover:bg-slate-100">Nyumbani</a>
+      <a href="masomo.html" class="px-3 py-2 rounded-md hover:bg-slate-100">Masomo</a>
+      <a href="mitihani.html" class="px-3 py-2 rounded-md hover:bg-slate-100">Mitihani</a>
+      <a href="videos.html" class="px-3 py-2 rounded-md hover:bg-slate-100">Video</a>
+      <a href="fisimaji.html" class="px-3 py-2 rounded-md text-cyan-700 hover:bg-cyan-50">Fisi Maji AI</a>
+      <a href="dashboard.html" class="px-3 py-2 rounded-md hover:bg-slate-100">Dashibodi</a>
+    </div>
+  </div>
+</nav>
+
+
+  <main class="lupa-container py-12">
+    <header>
+      <span class="lupa-chip">Library</span>
+      <h1 class="mt-4 text-4xl font-extrabold tracking-tight">Maktaba ya Masomo</h1>
+      <p class="mt-4 text-slate-600 leading-7 max-w-2xl">Chagua somo upate miongozo, muhtasari (notes), na maswali ya mazoezi yaliyopangiliwa kwa mada.</p>
+    </header>
+
+    <div class="mt-10 flex flex-wrap gap-2">
+      <button onclick="filterSubjects('')" class="subject-btn px-4 py-2 rounded-lg bg-slate-950 text-white text-sm font-bold">Zote</button>
+      <button onclick="filterSubjects('science')" class="subject-btn px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-100">Sayansi</button>
+      <button onclick="filterSubjects('arts')" class="subject-btn px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-100">Sanaa</button>
+      <button onclick="filterSubjects('business')" class="subject-btn px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-100">Biashara</button>
+    </div>
+
+    <div id="subjects-grid" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"></div>
+  </main>
+
+  <footer class="bg-slate-950 text-slate-300 mt-16">
+  <div class="lupa-container py-10 grid gap-8 md:grid-cols-4">
+    <div class="md:col-span-2">
+      <a href="index.html" class="inline-flex items-center gap-2 text-white font-extrabold">
+        <img src="images/logo.jpg" alt="" class="w-9 h-9 rounded-lg object-cover flex-shrink-0" aria-hidden="true">
+        <span>Lupanulla</span>
+      </a>
+      <p class="mt-4 max-w-xl text-sm leading-6 text-slate-400">Jukwaa la kujifunza, mitihani, zana za wanafunzi, na taarifa za elimu Tanzania.</p>
+    </div>
+    <div>
+      <h2 class="text-sm font-bold uppercase text-white">Jifunze</h2>
+      <div class="mt-3 grid gap-2 text-sm">
+        <a href="masomo.html" class="hover:text-white">Masomo</a>
+        <a href="mitihani.html" class="hover:text-white">Mitihani</a>
+        <a href="videos.html" class="hover:text-white">Video</a>
+        <a href="kamusi.html" class="hover:text-white">Kamusi</a>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-sm font-bold uppercase text-white">Huduma</h2>
+      <div class="mt-3 grid gap-2 text-sm">
+        <a href="calculator.html" class="hover:text-white">Kikokotoo</a>
+        <a href="ajira.html" class="hover:text-white">Ajira</a>
+        <a href="terms.html" class="hover:text-white">Masharti</a>
+        <a href="privacy.html" class="hover:text-white">Faragha</a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="lupa-container py-4 text-xs text-slate-500">&copy; 2026 Lupanulla Education & Health Foundation.</div>
+  </div>
+</footer>
+
+  <script src="js/main.js" defer></script>
+  <script>
+    const subjects = [
+      { name: 'Mathematics', group: 'science', icon: 'ph-plus-minus', count: 120 },
+      { name: 'Physics', group: 'science', icon: 'ph-atom', count: 85 },
+      { name: 'Chemistry', group: 'science', icon: 'ph-flask', count: 90 },
+      { name: 'Biology', group: 'science', icon: 'ph-dna', count: 110 },
+      { name: 'History', group: 'arts', icon: 'ph-scroll', count: 75 },
+      { name: 'Geography', group: 'arts', icon: 'ph-globe', count: 80 },
+      { name: 'Civics', group: 'arts', icon: 'ph-flag', count: 60 },
+      { name: 'Kiswahili', group: 'arts', icon: 'ph-translate', count: 95 },
+      { name: 'English', group: 'arts', icon: 'ph-quotes', count: 100 },
+      { name: 'Commerce', group: 'business', icon: 'ph-storefront', count: 55 },
+      { name: 'Book Keeping', group: 'business', icon: 'ph-calculator', count: 50 },
+      { name: 'Computer Science', group: 'science', icon: 'ph-desktop', count: 40 }
+    ];
+
+    const grid = document.getElementById('subjects-grid');
+
+    function renderSubjects(items) {
+      grid.innerHTML = items.map(s => `
+        <a href="masomo.html?subject=${s.name.toLowerCase()}" class="lupa-card p-6 flex flex-col items-center text-center">
+          <div class="w-16 h-16 rounded-full bg-cyan-50 flex items-center justify-center text-cyan-600 mb-4">
+            <i class="ph-fill ${s.icon} text-3xl"></i>
+          </div>
+          <h3 class="text-lg font-extrabold text-slate-900">${s.name}</h3>
+          <p class="mt-1 text-sm text-slate-500">${s.count} mada na vifaa</p>
+          <div class="mt-4 flex items-center gap-1.5 text-xs font-bold text-cyan-700 uppercase tracking-widest">
+            Soma sasa <i class="ph ph-arrow-right"></i>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    window.filterSubjects = function(group) {
+      document.querySelectorAll('.subject-btn').forEach(btn => {
+        btn.className = 'subject-btn px-4 py-2 rounded-lg text-sm font-bold ' +
+          (btn.getAttribute('onclick').includes(`'${group}'`) ? 'bg-slate-950 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100');
+      });
+      renderSubjects(group ? subjects.filter(s => s.group === group) : subjects);
+    };
+
+    renderSubjects(subjects);
+  </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupanulla | Nyaraka & Vitabu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Oswald', 'sans-serif'] },
+                    colors: { bgDark: '#f8fafc', panelLight: '#ffffff', textMain: '#0f172a', primaryBlue: '#020617', accentTeal: '#0891b2' }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(226, 232, 240, 0.5); }
+        .doc-card:hover .doc-overlay { opacity: 1; }
+    </style>
+</head>
+<body class="bg-bgDark font-sans antialiased">
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 h-20 flex items-center">
+        <div class="max-w-7xl mx-auto px-4 w-full flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="images/logo.jpg" alt="Logo" class="w-10 h-10 rounded-lg">
+                <span class="font-display font-bold text-2xl text-primaryBlue uppercase hidden sm:block">Lupanulla</span>
+            </a>
+            <div class="flex-grow max-w-xl mx-4 sm:mx-8 relative">
+                <input type="text" id="doc-search" placeholder="Tafuta vitabu, ripoti, miongozo..." class="w-full bg-gray-100 border-none rounded-full py-2.5 px-12 focus:ring-2 focus:ring-accentTeal outline-none transition-all">
+                <i class="ph ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="upload.html" class="bg-primaryBlue text-white p-2.5 rounded-full sm:px-6 sm:py-2.5 sm:rounded-xl font-bold flex items-center gap-2 hover:bg-slate-800 transition-colors">
+                    <i class="ph-bold ph-plus"></i>
+                    <span class="hidden sm:block">Pakia</span>
+                </a>
+                <a href="dashboard.html" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-primaryBlue border border-gray-200">
+                    <i class="ph ph-user text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
+            <div>
+                <h1 class="text-3xl font-display font-bold text-primaryBlue uppercase tracking-tight">Maktaba ya Nyaraka</h1>
+                <p class="text-gray-500 mt-1">Gundua maelfu ya vitabu na miongozo ya elimu.</p>
+            </div>
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 w-full md:w-auto">
+                <button class="px-4 py-2 bg-accentTeal text-white rounded-full text-sm font-semibold whitespace-nowrap">Zote</button>
+                <button class="px-4 py-2 bg-white border border-gray-200 text-gray-600 rounded-full text-sm font-semibold hover:border-accentTeal transition-colors whitespace-nowrap">Vitabu</button>
+                <button class="px-4 py-2 bg-white border border-gray-200 text-gray-600 rounded-full text-sm font-semibold hover:border-accentTeal transition-colors whitespace-nowrap">Miongozo</button>
+                <button class="px-4 py-2 bg-white border border-gray-200 text-gray-600 rounded-full text-sm font-semibold hover:border-accentTeal transition-colors whitespace-nowrap">Mitihani</button>
+            </div>
+        </div>
+
+        <!-- Grid -->
+        <div id="documents-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            <!-- Loading Placeholder (Will be replaced by dynamic data) -->
+            <div class="animate-pulse bg-white rounded-2xl border border-gray-100 overflow-hidden aspect-[3/4]">
+                <div class="w-full h-2/3 bg-gray-100"></div>
+                <div class="p-4">
+                    <div class="h-4 bg-gray-100 rounded w-3/4 mb-2"></div>
+                    <div class="h-3 bg-gray-100 rounded w-1/2"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        // Import Firebase/App logic would go here
+        // For now, let's render some mock data to show the design
+        const mockDocs = [
+            { id: '1', title: 'Biology Form 4 Notes', author: 'Dr. Mrema', category: 'Biology', views: '2.4k', img: 'https://images.unsplash.com/photo-1532187863486-abf9d39d99c5?q=80&w=400&auto=format&fit=crop' },
+            { id: '2', title: 'Mathematics NECTA Past Papers', author: 'Lupanulla Team', category: 'Maths', views: '1.2k', img: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=400&auto=format&fit=crop' },
+            { id: '3', title: 'History of Tanzania', author: 'Prof. Juma', category: 'History', views: '500', img: 'https://images.unsplash.com/photo-1461360228754-6e81c478c882?q=80&w=400&auto=format&fit=crop' },
+            { id: '4', title: 'Civics Form 1 Guide', author: 'Bakari Ali', category: 'Civics', views: '800', img: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=400&auto=format&fit=crop' },
+            { id: '5', title: 'Geography Practical Handbook', author: 'Sarah K.', category: 'Geography', views: '1.5k', img: 'https://images.unsplash.com/photo-1521295121783-8a321d551ad2?q=80&w=400&auto=format&fit=crop' }
+        ];
+
+        const grid = document.getElementById('documents-grid');
+        grid.innerHTML = mockDocs.map(doc => `
+            <a href="reader.html?id=${doc.id}" class="doc-card group relative bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl hover:border-accentTeal transition-all duration-300">
+                <div class="aspect-[3/4] relative overflow-hidden bg-gray-50">
+                    <img src="${doc.img}" alt="${doc.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="doc-overlay absolute inset-0 bg-primaryBlue/40 opacity-0 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                        <span class="bg-white text-primaryBlue px-6 py-2 rounded-full font-bold text-sm shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform">Soma Sasa</span>
+                    </div>
+                    <div class="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded-lg text-[10px] font-bold text-primaryBlue uppercase tracking-wider border border-gray-100">
+                        ${doc.category}
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-bold text-primaryBlue line-clamp-2 leading-tight group-hover:text-accentTeal transition-colors">${doc.title}</h3>
+                    <div class="flex items-center justify-between mt-3">
+                        <span class="text-xs text-gray-500 flex items-center gap-1">
+                            <i class="ph ph-user"></i> ${doc.author}
+                        </span>
+                        <span class="text-xs text-gray-400 flex items-center gap-1">
+                            <i class="ph ph-eye"></i> ${doc.views}
+                        </span>
+                    </div>
+                </div>
+            </a>
+        `).join('');
+    </script>
+</body>
+</html>

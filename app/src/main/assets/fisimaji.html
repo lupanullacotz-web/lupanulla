@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fisi Maji AI | Lupanulla</title>
+  <meta name="description" content="Msaidizi wako wa akili bandia (AI) kwa maswali ya masomo, utatuzi wa past papers, na miongozo ya kujisomea.">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            voidBg: '#070b16',
+            voidPanel: '#0d1424',
+            neonTeal: '#2dd4bf',
+            neonPurple: '#a78bfa',
+            neonBlue: '#60a5fa',
+            textLight: '#eef2f9',
+            textMute: '#8b95ad',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #070b16; color: #eef2f9; }
+    .ai-chat-container { height: calc(100vh - 80px); }
+    .message-in { animation: messageIn 0.3s ease-out forwards; }
+    @keyframes messageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .dot-typing { animation: dotTyping 1.4s infinite linear; }
+    @keyframes dotTyping { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+    .ai-glow { box-shadow: 0 0 20px -5px rgba(45, 212, 191, 0.4); }
+    pre { background: #1a1b26; padding: 1rem; border-radius: 0.75rem; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; margin: 0.5rem 0; }
+    code { font-family: 'JetBrains Mono', monospace; color: #a78bfa; }
+  </style>
+  <meta name="theme-color" content="#0891b2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="icon" type="image/jpg" href="images/logo.jpg">
+  <link rel="apple-touch-icon" href="images/logo.jpg">
+  <link rel="manifest" href="manifest.json">
+  <script src="js/sw-register.js" defer></script>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body class="antialiased font-sans">
+
+  <!-- Header -->
+  <header class="h-20 bg-voidPanel/80 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-6 sticky top-0 z-50">
+    <div class="flex items-center gap-4">
+      <a href="dashboard.html" class="text-textMute hover:text-white transition-colors">
+        <i class="ph ph-arrow-left text-2xl"></i>
+      </a>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-400/20 flex items-center justify-center ai-glow">
+          <i class="ph-fill ph-robot text-2xl"></i>
+        </div>
+        <div>
+          <h1 class="font-display font-bold text-lg leading-tight">Fisi Maji AI</h1>
+          <div class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[10px] font-bold text-textMute uppercase tracking-wider">Msaidizi wa Masomo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <button onclick="clearChat()" class="text-xs font-semibold text-textMute hover:text-white transition-colors">Futa Maongezi</button>
+      <a href="duka.html" class="hidden sm:inline-flex bg-white/5 border border-white/10 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg hover:bg-white/10">Lupanulla PRO</a>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-6 flex flex-col ai-chat-container">
+    
+    <!-- Chat History -->
+    <div id="chat-box" class="flex-1 overflow-y-auto space-y-6 pb-6 pr-2 custom-scrollbar">
+      <!-- Welcome Message -->
+      <div class="flex gap-4 message-in">
+        <div class="w-9 h-9 rounded-lg bg-indigo-500/20 text-indigo-400 border border-indigo-400/20 flex items-center justify-center flex-shrink-0 mt-1">
+          <i class="ph-fill ph-robot text-xl"></i>
+        </div>
+        <div class="space-y-3">
+          <div class="bg-voidPanel border border-white/10 rounded-2xl p-4 max-w-lg shadow-lg">
+            <p class="text-sm leading-relaxed text-textLight">Habari! Mimi ni <span class="text-indigo-400 font-bold">Fisi Maji AI</span>, msaidizi wako mwerevu kutoka Lupanulla. Naweza kukusaidia:</p>
+            <ul class="mt-3 space-y-2 text-sm text-textMute">
+              <li class="flex gap-2"><i class="ph ph-check-circle text-neonTeal mt-0.5"></i> Kutatua maswali magumu ya Hisabati na Sayansi.</li>
+              <li class="flex gap-2"><i class="ph ph-check-circle text-neonTeal mt-0.5"></i> Kuelezea mada yoyote kwa lugha rahisi.</li>
+              <li class="flex gap-2"><i class="ph ph-check-circle text-neonTeal mt-0.5"></i> Kukusaidia kufanya mapitio ya past papers.</li>
+            </ul>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="sendQuery('Nieleze kuhusu mchakato wa Photosynthesis')" class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-medium text-textMute hover:text-white hover:border-white/20 transition-all">Photosynthesis ni nini?</button>
+            <button onclick="sendQuery('Nitafutie namba za siri za kufaulu Hisabati Kidato cha 4')" class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-medium text-textMute hover:text-white hover:border-white/20 transition-all">Mbinu za Hisabati</button>
+            <button onclick="sendQuery('Mstahiki Meya ni nani katika tamthilia?')" class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-medium text-textMute hover:text-white hover:border-white/20 transition-all">Mstahiki Meya</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="pt-4 border-t border-white/5 sticky bottom-0 bg-voidBg">
+      <div class="relative group">
+        <textarea id="user-input" rows="1" placeholder="Uliza swali lolote la somo..." class="w-full bg-voidPanel border border-white/10 rounded-2xl py-4 pl-4 pr-16 text-sm text-white placeholder-textMute focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500/50 transition-all resize-none overflow-hidden" oninput="autoGrow(this)"></textarea>
+        <button id="send-btn" onclick="handleSend()" class="absolute right-3 bottom-3 w-10 h-10 rounded-xl bg-indigo-500 text-white flex items-center justify-center hover:bg-indigo-600 transition-all shadow-lg shadow-indigo-500/20 disabled:opacity-50 disabled:cursor-not-allowed">
+          <i class="ph-fill ph-paper-plane-right text-xl"></i>
+        </button>
+      </div>
+      <p class="text-[10px] text-center text-textMute mt-3">Fisi Maji AI anaweza kukosea baadhi ya takwimu. Thibitisha na walimu wako.</p>
+    </div>
+
+  </main>
+
+  <script src="js/main.js" defer></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-functions.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBRFJ_T4qynTutOmMb_wcuuRmFIiwJ__xE",
+      authDomain: "lupanulla.firebaseapp.com",
+      databaseURL: "https://lupanulla-default-rtdb.firebaseio.com",
+      projectId: "lupanulla",
+      storageBucket: "lupanulla.firebasestorage.app",
+      messagingSenderId: "168472987630",
+      appId: "1:168472987630:web:8b2e4aa3bc8fb4a0f3b0ff"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const functions = getFunctions(app);
+
+    const chatBox = document.getElementById('chat-box');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    window.autoGrow = function(el) {
+      el.style.height = "auto";
+      el.style.height = (el.scrollHeight) + "px";
+    }
+
+    window.handleSend = async function() {
+      const text = userInput.value.trim();
+      if (!text) return;
+      
+      addMessage('user', text);
+      userInput.value = '';
+      userInput.style.height = 'auto';
+      
+      const botMsgId = addTypingIndicator();
+      
+      try {
+        // Hapa tungeweza kuita Gemini API moja kwa moja au kupitia Cloud Functions
+        // Kwa sasa tunaweka demo response ili kadi ionekane inafanya kazi
+        const response = await callAI(text);
+        removeTypingIndicator(botMsgId);
+        addMessage('bot', response);
+      } catch (err) {
+        removeTypingIndicator(botMsgId);
+        addMessage('bot', "Samahani, nimepata tatizo kidogo la kiufundi. Tafadhali jaribu tena baada ya muda mfupi.");
+      }
+    }
+
+    window.sendQuery = function(text) {
+      userInput.value = text;
+      handleSend();
+    }
+
+    window.clearChat = function() {
+      chatBox.innerHTML = '';
+      showToast("Maongezi yamefutwa.");
+    }
+
+    function addMessage(sender, text) {
+      const div = document.createElement('div');
+      div.className = `flex gap-4 message-in ${sender === 'user' ? 'flex-row-reverse' : ''}`;
+      
+      const avatar = sender === 'user' 
+        ? `<div class="w-9 h-9 rounded-lg bg-neonTeal/20 text-neonTeal border border-neonTeal/20 flex items-center justify-center flex-shrink-0 mt-1"><i class="ph-fill ph-user text-xl"></i></div>`
+        : `<div class="w-9 h-9 rounded-lg bg-indigo-500/20 text-indigo-400 border border-indigo-400/20 flex items-center justify-center flex-shrink-0 mt-1"><i class="ph-fill ph-robot text-xl"></i></div>`;
+      
+      div.innerHTML = `
+        ${avatar}
+        <div class="bg-voidPanel border border-white/10 rounded-2xl p-4 max-w-lg shadow-lg ${sender === 'user' ? 'bg-indigo-500/10 border-indigo-500/20' : ''}">
+          <div class="text-sm leading-relaxed text-textLight prose prose-invert max-w-none">
+            ${formatAIResponse(text)}
+          </div>
+        </div>
+      `;
+      
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function addTypingIndicator() {
+      const id = 'typing-' + Date.now();
+      const div = document.createElement('div');
+      div.id = id;
+      div.className = 'flex gap-4 message-in';
+      div.innerHTML = `
+        <div class="w-9 h-9 rounded-lg bg-indigo-500/20 text-indigo-400 border border-indigo-400/20 flex items-center justify-center flex-shrink-0 mt-1">
+          <i class="ph-fill ph-robot text-xl"></i>
+        </div>
+        <div class="bg-voidPanel border border-white/10 rounded-2xl p-4 shadow-lg flex gap-1 items-center">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 dot-typing"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 dot-typing" style="animation-delay: 0.2s"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 dot-typing" style="animation-delay: 0.4s"></span>
+        </div>
+      `;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      return id;
+    }
+
+    function removeTypingIndicator(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    }
+
+    function formatAIResponse(text) {
+      // Simple markdown-like formatting for demo
+      return text
+        .replace(/\n/g, '<br>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong class="text-indigo-400">$1</strong>')
+        .replace(/`(.*?)`/g, '<code class="px-1.5 py-0.5 rounded bg-white/5 border border-white/10">$1</code>')
+        .replace(/### (.*?)/g, '<h3 class="text-base font-bold text-white mt-4 mb-2">$1</h3>');
+    }
+
+    async function callAI(query) {
+      // Hapa unganisha na Gemini API
+      // Kwa simulation tunasubiri sekunde 1.5
+      await new Promise(r => setTimeout(r, 1500));
+      
+      const responses = {
+        "photosynthesis": "### Photosynthesis ni nini?\n\nPhotosynthesis ni mchakato ambao mimea ya kijani hutumia ili kutengeneza chakula chake (sukari/glucose) kwa kutumia mwanga wa jua.\n\n**Vitu muhimu vinavyohitajika:**\n1. **Mwanga wa Jua:** Chanzo cha nishati.\n2. **Maji (H2O):** Hupatikana kutoka kwenye udongo.\n3. **Hewa ya Ukaa (CO2):** Hupatikana kutoka kwenye anga.\n4. **Chlorophyll:** Rangi ya kijani kwenye majani inayonyonja mwanga.\n\n**Mchakato huu hutoa Hewa Safi (Oxygen) kama zao la ziada ambalo binadamu tunavuta.**",
+        "default": "Asante kwa swali lako kuhusu **" + query + "**. Niko hapa kukusaidia kuelewa mada hii kwa undani zaidi.\n\nUnaweza pia kupata maelezo zaidi katika sehemu ya **Masomo** kwenye Dashibodi yako."
+      };
+      
+      if (query.toLowerCase().includes('photosynthesis')) return responses.photosynthesis;
+      return responses.default;
+    }
+    
+    function showToast(msg) {
+        // Helper function from main.js or locally
+        console.log(msg);
+    }
+
+  </script>
+</body>
+</html>

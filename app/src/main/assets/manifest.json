@@ -1,0 +1,21 @@
+{
+  "name": "Lupanulla | Kitovu cha Elimu",
+  "short_name": "Lupanulla",
+  "description": "Jukwaa la kwanza la kidijitali Tanzania linalounganisha mtaala mzima.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0891b2",
+  "icons": [
+    {
+      "src": "images/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpg"
+    },
+    {
+      "src": "images/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpg"
+    }
+  ]
+}

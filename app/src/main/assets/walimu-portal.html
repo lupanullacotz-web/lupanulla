@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupanulla | Walimu Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Oswald', 'sans-serif'] },
+                    colors: { bgDark: '#f8fafc', panelLight: '#ffffff', textMain: '#0f172a', primaryBlue: '#020617', accentTeal: '#0891b2' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f8fafc; font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="antialiased">
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="/assets/images/logo.webp" alt="Logo" class="w-10 h-10 rounded-lg">
+                <span class="font-display font-bold text-2xl text-primaryBlue uppercase">Lupanulla</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="auth.html" class="bg-primaryBlue text-white px-6 py-2 rounded-full font-bold">Ingia</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-display font-bold text-primaryBlue uppercase mb-4">Walimu Portal</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto">Zana na rasilimali maalumu kwa ajili ya walimu wa Kitanzania. Simamia madarasa yako na upate miongozo ya ufundishaji.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-6">
+                    <i class="ph-fill ph-book-open text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Miongozo ya Walimu</h3>
+                <p class="text-gray-600 mb-6">Pakua miongozo rasmi ya walimu kwa masomo yote ya msingi na sekondari (NECTA).</p>
+                <button class="w-full py-3 bg-gray-100 rounded-xl font-bold text-primaryBlue hover:bg-gray-200 transition-colors">Fungua</button>
+            </div>
+
+            <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center text-green-600 mb-6">
+                    <i class="ph-fill ph-users text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Usimamizi wa Madarasa</h3>
+                <p class="text-gray-600 mb-6">Tengeneza ripoti za wanafunzi, fuatilia maendeleo yao na simamia mahudhurio kidijitali.</p>
+                <button class="w-full py-3 bg-gray-100 rounded-xl font-bold text-primaryBlue hover:bg-gray-200 transition-colors">Anza</button>
+            </div>
+
+            <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-purple-600 mb-6">
+                    <i class="ph-fill ph-chalkboard-teacher text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Rasilimali za Kufundishia</h3>
+                <p class="text-gray-600 mb-6">Pata slide za masomo, video za majaribio ya maabara na mitihani ya majaribio.</p>
+                <button class="w-full py-3 bg-gray-100 rounded-xl font-bold text-primaryBlue hover:bg-gray-200 transition-colors">Tafuta</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-primaryBlue text-white py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; 2026 Lupanulla Walimu Portal. Haki zote zimehifadhiwa.</p>
+        </div>
+    </footer>
+</body>
+</html>
